@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Informes Tulsa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: rgb(26, 62, 118);
+            --secondary-color: rgb(227, 27, 40);
+            --primary-light: rgba(26, 62, 118, 0.1);
+            --secondary-light: rgba(227, 27, 40, 0.1);
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --border-color: #e5e7eb;
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color), rgba(26, 62, 118, 0.8));
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1rem;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem 1rem;
+            background: var(--bg-primary);
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .search-container {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            background: var(--bg-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--primary-light), var(--shadow-md);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1.25rem;
+            height: 1.25rem;
+            color: var(--text-secondary);
+        }
+
+        .area-card {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .area-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .area-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem;
+            cursor: pointer;
+            background: var(--primary-light);
+            transition: background 0.3s ease;
+        }
+
+        .area-header:hover {
+            background: rgba(26, 62, 118, 0.15);
+        }
+
+        .area-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .area-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            padding: 0.25rem;
+            background: var(--primary-color);
+            border-radius: 8px;
+            color: white;
+        }
+
+        .area-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .report-count {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .expand-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            color: var(--text-secondary);
+            transition: transform 0.3s ease;
+        }
+
+        .area-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .area-content.expanded {
+            max-height: 2000px;
+        }
+
+        .reports-list {
+            list-style: none;
+        }
+
+        .report-item {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .report-item:last-child {
+            border-bottom: none;
+        }
+
+        .report-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 1.5rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .report-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0;
+            background: var(--primary-light);
+            transition: width 0.3s ease;
+        }
+
+        .report-link:hover::before {
+            width: 100%;
+        }
+
+        .report-link:hover {
+            color: var(--primary-color);
+            transform: translateX(8px);
+        }
+
+        .report-name {
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+
+        .external-icon {
+            width: 1.125rem;
+            height: 1.125rem;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .report-link:hover .external-icon {
+            color: var(--secondary-color);
+            transform: translate(2px, -2px);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--bg-primary);
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .no-results h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .no-results p {
+            color: var(--text-secondary);
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 640px) {
+            .container {
+                padding: 0.75rem;
+            }
+            
+            .header {
+                padding: 1.5rem 1rem;
+                border-radius: 16px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .area-header {
+                padding: 1.25rem 1rem;
+            }
+            
+            .report-link {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Portal de Informes</h1>
+            <p>Dashboards corporativos Tulsa</p>
+        </header>
+
+        <div class="search-container">
+            <input 
+                type="text" 
+                id="searchInput" 
+                class="search-input" 
+                placeholder="Buscar informes..."
+                autocomplete="off"
+            >
+            <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+        </div>
+
+        <main id="reportContainer"></main>
+
+        <div class="no-results" id="noResults" style="display: none;">
+            <h3>No se encontraron informes</h3>
+            <p>Intenta con otros términos de búsqueda</p>
+        </div>
+    </div>
+
+    <script>
+        const areaIcons = {
+            'Producción': `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>`,
+            'Mantención': `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>`,
+            'Calidad': `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>`,
+            'Ventas': `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>`
+        };
+
+        const reportData = [
+            { area: "Producción", informe: "Etiquetado línea verde", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Produccion/Etiquetado%20Linea%20Verde.url?csf=1&web=1&e=OOzDcG" },
+            { area: "Producción", informe: "Etiquetado Secadores", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Produccion/Etiquetado%20Secadores.url?csf=1&web=1&e=yFwNT7" },
+            { area: "Producción", informe: "Indicadores descortezado en línea", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Produccion/Indicadores%20descortezado%20en%20linea.url?csf=1&web=1&e=16Hy6E" },
+            { area: "Producción", informe: "Indicadores Línea Verde en línea", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Produccion/Indicadores%20Linea%20Verde%20en%20linea.url?csf=1&web=1&e=k3Bqb2" },
+            { area: "Producción", informe: "Indicadores LV Histórico", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Produccion/Indicadores%20LV%20Historico.url?csf=1&web=1&e=82C4s8" },
+            { area: "Producción", informe: "Indicadores Ventek", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Produccion/Indicadores%20Ventek.url?csf=1&web=1&e=lWyK4q" },
+            { area: "Producción", informe: "Ingreso BPT Chapas", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Produccion/Ingreso%20BPT%20Chapas.url?csf=1&web=1&e=1UKZhJ" },
+            { area: "Producción", informe: "Ingreso BPT Plywood", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Produccion/Ingreso%20BPT%20Plywood.url?csf=1&web=1&e=gB5JBO" },
+            { area: "Producción", informe: "Ingresos BPT Chapas por máquina", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Produccion/Ingresos%20BPT%20Chapas%20por%20maquina.url?csf=1&web=1&e=m23G95" },
+            { area: "Producción", informe: "New Indicadores de Calidad (Dim Soplado)", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Produccion/New%20Indicadores%20de%20Calidad(Dim%20Soplado).url?csf=1&web=1&e=PRA7AQ" },
+            { area: "Producción", informe: "Producción Línea Secado", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Produccion/Producci%C3%B3n%20L%C3%ADnea%20Secado.url?csf=1&web=1&e=6adW8E" },
+            { area: "Producción", informe: "Costos", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Produccion/Costos%20Produccion.url?csf=1&web=1&e=5rKdPg" },
+            { area: "Producción", informe: "Producción Máquina", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Produccion/Produccion%20Maquina.url?csf=1&web=1&e=ymYcQf" },
+            { area: "Producción", informe: "Rendimiento LV JAS", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Produccion/Rendimiento%20LV%20JAS.url?csf=1&web=1&e=4teA4v" },
+            { area: "Producción", informe: "Rendimiento Diario L Verde", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Produccion/RendimientoDiarioLVerde.url?csf=1&web=1&e=fqmEn6" },
+            { area: "Producción", informe: "Stock Bodega de Chapas-Plywood", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Produccion/Stock%20Bodega%20de%20Chapas-Plywood.url?csf=1&web=1&e=Kr9ACI" },
+            { area: "Producción", informe: "Temperatura Macerado", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Produccion/Temperatura%20Macerado.url?csf=1&web=1&e=5TFAXP" },
+            { area: "Producción", informe: "Temperatura Trozos XY", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Produccion/TemperaturaTrozosXY.url?csf=1&web=1&e=QeY474" },
+            { area: "Mantención", informe: "Fracttal", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Mantencion/Fracttal.url?csf=1&web=1&e=mHVLAv" },
+            { area: "Mantención", informe: "Gastos mantenimiento", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Mantencion/Gastos%20mantenimiento.url?csf=1&web=1&e=lvbRkR" },
+            { area: "Calidad", informe: "Indicadores Calidad Chapas", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Calidad/Indicadores%20Calidad%20Chapas.url?csf=1&web=1&e=lxgWhO" },
+            { area: "Calidad", informe: "Indicadores de Calidad", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Calidad/Indicadores%20de%20Calidad.url?csf=1&web=1&e=bmUvbT" },
+            { area: "Calidad", informe: "New Indicadores de Calidad (Dim Soplado)", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20Calidad/New%20Indicadores%20de%20Calidad(Dim%20Soplado).url?csf=1&web=1&e=AIVbjD" },
+            { area: "Ventas", informe: "Ventas", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS-PBIComercializacion/Documentos%20compartidos/PBI%20Comercializacion/Ventas%20con%20Precio.url?csf=1&web=1&e=K4Z9Eo" },
+            { area: "RRHH", informe: "Control Dotación Tulsa", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20RRHH/Control%20Dotaci%C3%B3n%20Tulsa.url?csf=1&web=1&e=l38Lec" },
+            { area: "RRHH", informe: "Dotacion De Reemplazo Autorizado Para Otros Cargos", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20RRHH/Dotacion%20De%20Reemplazo%20Autorizado%20Para%20Otros%20Cargos.url?csf=1&web=1&e=4YgNqe" },
+            { area: "RRHH", informe: "Encuesta de satisfacción 2024", link: "https://tulsacl.sharepoint.com/:u:/r/sites/DASHBOARDS/Documentos%20compartidos/PBI%20RRHH/Encuesta%20de%20satisfacci%C3%B3n%202024.url?csf=1&web=1&e=vVMHOj" },
+            { area: "RRHH", informe: "General | Indicadores de Planta | Microsoft Teams", link: "https://teams.microsoft.com/l/channel/19%3Ae6IppqeeOR2Utu3xW8DOT1ariEgJTnKXYB3IGKb8uK41%40thread.tacv2/General?groupId=44bfa034-76a1-48ee-a424-c99d027f6304&tenantId=8daf5997-0bac-457f-a65a-cf7ed3ba8b86" }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const reportContainer = document.getElementById('reportContainer');
+            const searchInput = document.getElementById('searchInput');
+            const noResults = document.getElementById('noResults');
+            let expandedAreas = new Set();
+
+            function renderReports(filter = '') {
+                const groupedReports = reportData.reduce((acc, report) => {
+                    const reportName = report.informe.toLowerCase();
+                    const areaName = report.area.toLowerCase();
+                    const filterText = filter.toLowerCase();
+
+                    if (reportName.includes(filterText) || areaName.includes(filterText)) {
+                        if (!acc[report.area]) {
+                            acc[report.area] = [];
+                        }
+                        acc[report.area].push(report);
+                    }
+                    return acc;
+                }, {});
+
+                reportContainer.innerHTML = '';
+                const areas = Object.keys(groupedReports);
+
+                if (areas.length === 0) {
+                    noResults.style.display = 'block';
+                    return;
+                }
+                noResults.style.display = 'none';
+
+                areas.forEach(area => {
+                    const reports = groupedReports[area];
+                    const isExpanded = expandedAreas.has(area);
+
+                    const areaCard = document.createElement('div');
+                    areaCard.className = 'area-card';
+                    areaCard.innerHTML = `
+                        <div class="area-header" data-area="${area}">
+                            <div class="area-title">
+                                <svg class="area-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    ${areaIcons[area]}
+                                </svg>
+                                ${area}
+                            </div>
+                            <div class="area-controls">
+                                <span class="report-count">${reports.length}</span>
+                                <svg class="expand-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="area-content ${isExpanded ? 'expanded' : ''}">
+                            <ul class="reports-list">
+                                ${reports.map(report => `
+                                    <li class="report-item">
+                                        <a href="${report.link}" target="_blank" rel="noopener" class="report-link">
+                                            <span class="report-name">${report.informe}</span>
+                                            <svg class="external-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    `;
+
+                    reportContainer.appendChild(areaCard);
+
+                    // Accordion functionality
+                    const header = areaCard.querySelector('.area-header');
+                    const content = areaCard.querySelector('.area-content');
+                    const icon = areaCard.querySelector('.expand-icon');
+
+                    header.addEventListener('click', () => {
+                        const isCurrentlyExpanded = content.classList.contains('expanded');
+                        
+                        if (isCurrentlyExpanded) {
+                            content.classList.remove('expanded');
+                            icon.style.transform = 'rotate(0deg)';
+                            expandedAreas.delete(area);
+                        } else {
+                            content.classList.add('expanded');
+                            icon.style.transform = 'rotate(180deg)';
+                            expandedAreas.add(area);
+                        }
+                    });
+                });
+            }
+
+            // Search with debounce
+            let searchTimeout;
+            searchInput.addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    renderReports(e.target.value);
+                }, 200);
+            });
+
+            renderReports();
+        });
+    </script>
+</body>
+</html>
