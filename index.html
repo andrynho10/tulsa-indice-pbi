@@ -61,22 +61,12 @@
             border: 1px solid var(--border-color);
         }
 
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-        }
-
         .logo-container {
             margin-bottom: 1.5rem;
         }
 
         .logo {
-            width: 120px;
+            width: 240px;
             height: 60px;
             object-fit: contain;
             margin: 0 auto;
@@ -324,7 +314,7 @@
             <div class="logo-container">
                 <img src="images/logo_empresa.png" alt="Logo Tulsa" class="logo">
             </div>
-            <h1>Portal de Informes</h1>
+            <h1>Indice Power BI</h1>
         </header>
 
         <div class="search-container">
@@ -387,14 +377,31 @@
             const searchInput = document.getElementById('searchInput');
             const noResults = document.getElementById('noResults');
             let expandedAreas = new Set();
-
+            function removeDiacritics(str) {
+                return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            }    
             function renderReports(filter = '') {
-                const groupedReports = reportData.reduce((acc, report) => {
-                    const reportName = report.informe.toLowerCase();
-                    const areaName = report.area.toLowerCase();
-                    const filterText = filter.toLowerCase();
+                const filterText = removeDiacritics(filter.toLowerCase().trim());
 
-                    if (reportName.includes(filterText) || areaName.includes(filterText)) {
+                // Si no hay filtro, ninguna área está expandida
+                if (!filterText) {
+                    expandedAreas = new Set();
+                }
+
+                const matchedAreas = new Set();
+                const groupedReports = reportData.reduce((acc, report) => {
+                    const fullText = removeDiacritics(
+                        (report.area + ' ' + report.informe).toLowerCase()
+                    );
+
+                    if (filterText && fullText.includes(filterText)) {
+                        if (!acc[report.area]) {
+                            acc[report.area] = [];
+                        }
+                        acc[report.area].push(report);
+                        matchedAreas.add(report.area);
+                    } else if (!filterText) {
+                        // Mostrar todos los informes si no hay filtro
                         if (!acc[report.area]) {
                             acc[report.area] = [];
                         }
@@ -402,6 +409,11 @@
                     }
                     return acc;
                 }, {});
+
+                // Solo expandir áreas si hay filtro
+                if (filterText) {
+                    expandedAreas = matchedAreas;
+                }
 
                 reportContainer.innerHTML = '';
                 const areas = Object.keys(groupedReports);
@@ -469,6 +481,10 @@
                             expandedAreas.add(area);
                         }
                     });
+
+                    if (isExpanded) {
+                        icon.style.transform = 'rotate(180deg)';
+                    }
                 });
             }
 
