@@ -47,6 +47,7 @@
             margin: 0 auto;
             padding: 1rem;
             min-height: 100vh;
+            padding-bottom: 2.2rem;
         }
 
         .header {
@@ -286,14 +287,14 @@
             text-align: center;
             padding: 0.5rem 0;
             font-size: 0.7rem;
-            font-weight: lighter;
+            font-weight: 300; /* más fina */
             color: #cbd5e1;
             background: transparent;
             letter-spacing: 0.05em;
             z-index: 100;
             user-select: none;
             pointer-events: none;
-}
+        }
 
         /* Mobile responsive */
         @media (max-width: 640px) {
@@ -325,6 +326,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <header class="header">
@@ -355,9 +357,6 @@
         </div>
     </div>
 
-    <footer class="footer-creditos">
-        Andrés Amaya Garcés - 2025
-    </footer>
 
     <script>
         const areaIcons = {
