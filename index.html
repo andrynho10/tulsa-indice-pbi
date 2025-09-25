@@ -278,6 +278,23 @@
             color: var(--text-secondary);
         }
 
+        .footer-creditos {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100vw;
+            text-align: center;
+            padding: 0.5rem 0;
+            font-size: 0.7rem;
+            font-weight: lighter;
+            color: #cbd5e1;
+            background: transparent;
+            letter-spacing: 0.05em;
+            z-index: 100;
+            user-select: none;
+            pointer-events: none;
+}
+
         /* Mobile responsive */
         @media (max-width: 640px) {
             .container {
@@ -337,6 +354,10 @@
             <p>Intenta con otros términos de búsqueda</p>
         </div>
     </div>
+
+    <footer class="footer-creditos">
+        Andrés Amaya Garcés - 2025
+    </footer>
 
     <script>
         const areaIcons = {
