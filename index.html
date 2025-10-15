@@ -411,12 +411,25 @@
 
         const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2AcFiVIpl8ygFV7S-gBkcSq6oa8tbiBd4yd7HLOlcem7WD8pbGXZccoEC4csIbd2QGYNEoAUEJe4B/pub?gid=0&single=true&output=csv"
 
-        fetch(SHEET_URL)
-            .then(res => res.text())
-            .then(text => {
-                reportData = csvToArray(text);
-                document.dispatchEvent(new Event('reportDataReady'));
-            });
+        function fetchAndUpdateReports() {
+            fetch(SHEET_URL)
+                .then(res => res.text())
+                .then(text => {
+                    reportData = csvToArray(text);
+                    // Si la app ya está iniciada, actualiza la vista
+                    if (typeof renderReports === "function") {
+                        renderReports(document.getElementById('searchInput')?.value || '');
+                    } else {
+                        document.dispatchEvent(new Event('reportDataReady'));
+                    }
+                });
+        }
+
+        // Llama la primera vez
+        fetchAndUpdateReports();
+
+        // Luego cada 60 segundos (60000 ms)
+        setInterval(fetchAndUpdateReports, 60000);
 
         function startApp() {
             const reportContainer = document.getElementById('reportContainer');
