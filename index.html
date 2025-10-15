@@ -418,7 +418,7 @@
                 document.dispatchEvent(new Event('reportDataReady'));
             });
 
-        document.addEventListener('DOMContentLoaded', function() {
+        function startApp() {
             const reportContainer = document.getElementById('reportContainer');
             const searchInput = document.getElementById('searchInput');
             const noResults = document.getElementById('noResults');
@@ -534,17 +534,25 @@
                 });
             }
 
-            // Search with debounce
-            let searchTimeout;
-            searchInput.addEventListener('input', (e) => {
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(() => {
-                    renderReports(e.target.value);
-                }, 200);
-            });
+    // Search with debounce
+    let searchTimeout;
+    searchInput.addEventListener('input', (e) => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            renderReports(e.target.value);
+        }, 200);
+    });
 
-            renderReports();
-        });
+    renderReports();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    if (reportData.length === 0) {
+        document.addEventListener('reportDataReady', startApp);
+    } else {
+        startApp();
+    }
+});
     </script>
 </body>
 </html>
