@@ -392,35 +392,31 @@
             'RRHH': `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>`
         };
 
-        const reportData = [
-            { area: "Producción", informe: "Etiquetado línea verde", link: "https://app.powerbi.com/view?r=eyJrIjoiNGZhNzk3ZjktZGEzNi00MzZlLWJlMDgtZGJjZGY1NWRiYmUyIiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Producción", informe: "Etiquetado Secadores", link: "https://app.powerbi.com/view?r=eyJrIjoiNzQwZGJlMjAtODA5NS00YmYzLTkyN2EtZDM0NzgwYzRjYjkxIiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Producción", informe: "Indicadores descortezado en línea", link: "https://app.powerbi.com/view?r=eyJrIjoiZjc0NWU1ZmMtZWMwYy00MDg3LWFiNWMtNjM0YWNlYjA5ZDk3IiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Producción", informe: "Indicadores dimensionado en línea", link: "https://app.powerbi.com/view?r=eyJrIjoiMWU5OGZjOTAtYTcxZS00NmZlLTgyMzUtZWQ4YjU1MGU4OTMwIiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Producción", informe: "Indicadores Línea Verde en línea", link: "https://app.powerbi.com/view?r=eyJrIjoiYTRiNzJiNTctODQzNS00ZGNjLTgzYmUtMGEyN2Q3MjkzYTgzIiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Producción", informe: "Indicadores LV Histórico", link: "https://app.powerbi.com/view?r=eyJrIjoiZjA0MTY0MDItNmY3Yi00MWYzLWJiYTgtNjg4YzEwZTU0NWZlIiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Producción", informe: "Análisis de datos Ventek", link: "https://app.powerbi.com/view?r=eyJrIjoiZDQwYzI3Y2YtYjlhZC00OTBjLWEwY2EtZWE4ZWEyNTJlZmVlIiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Producción", informe: "Indicadores Ventek", link: "https://app.powerbi.com/view?r=eyJrIjoiNDVkOGEyMTEtOGMxNi00YmI1LTkyMDctYjFjMWFhZWViNjcyIiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Producción", informe: "Ingreso BPT Chapas", link: "https://app.powerbi.com/view?r=eyJrIjoiZTFkODc2OTAtYzc3OC00YjU1LTljZWEtZTAwOTFiNDJlOTQxIiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Producción", informe: "Ingreso BPT Plywood", link: "https://app.powerbi.com/view?r=eyJrIjoiNWU1ZmRhOWMtOWMyOC00MDhkLTkwOWItYzUwOWZjY2RkZTAyIiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Producción", informe: "Ingresos BPT Chapas por máquina", link: "https://app.powerbi.com/view?r=eyJrIjoiYzJhMmFhMGItZTI0MC00NjgzLWI3Y2MtNTAzMDUyNGNkNDVhIiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Producción", informe: "Producción Línea Secado", link: "https://app.powerbi.com/view?r=eyJrIjoiMzgwNGY1MGUtZDhlNC00OTMwLWE3YmUtYmQyY2IxNWQ1NjZmIiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Producción", informe: "Costos", link: "https://app.powerbi.com/view?r=eyJrIjoiMTA4ZTlkYzYtYzJmMS00ZTdjLTg4ZDktYWIyNTNkN2M2ODBiIiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Producción", informe: "Producción Máquina", link: "https://app.powerbi.com/view?r=eyJrIjoiZmM3ZDQ5YWEtYjdkMC00YWQwLTkyZWMtYjhjN2NmMjllMTgyIiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Producción", informe: "Rendimiento LV JAS", link: "https://app.powerbi.com/view?r=eyJrIjoiMTE0MGVhZDAtM2MyYy00OTZjLThlMGYtNTdiY2FlZDQwZDY1IiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Producción", informe: "Stock Bodega de Chapas-Plywood", link: "https://app.powerbi.com/view?r=eyJrIjoiZGE0M2VjNzMtNDNjMi00ODE4LWE4YjUtNGNlYjM5NzRjYWFiIiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Producción", informe: "Temperatura Macerado", link: "https://app.powerbi.com/view?r=eyJrIjoiMDZkMmY4ZjctZjJlOS00ODhlLWFmMGItODczNzU5NzQyMjAzIiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Producción", informe: "Temperatura Trozos XY", link: "https://app.powerbi.com/view?r=eyJrIjoiOTgxYTY5NzMtZDU2Mi00MDdkLWEzNDctNWY3M2E0ZjdjZTdhIiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Mantención", informe: "Fracttal", link: "https://app.powerbi.com/view?r=eyJrIjoiNTc2ODhjODYtZWM1YS00Y2RmLWE1NWQtMjhkNzQ3YTc3N2NmIiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Mantención", informe: "KPIs Fracttal", link: "https://app.powerbi.com/view?r=eyJrIjoiYTdjZmNkN2MtNDBmNC00Mjk0LWEwZGYtNWFiOGMyOGZjMTBiIiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Mantención", informe: "Tiempos Muertos Chapas en Línea", link: "https://app.powerbi.com/view?r=eyJrIjoiZDhjN2M3ODYtODYzMy00YTY4LThkZDktNjIxYWJhNDc0NjMxIiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Mantención", informe: "Tiempos Muertos Chapas Histórico", link: "https://app.powerbi.com/view?r=eyJrIjoiMjgxYmVhNjItN2QxOC00MzFjLWFiMDEtNjdiMmFiMDM0NzY4IiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Mantención", informe: "Tiempos Muertos Plywood en Línea", link: "https://app.powerbi.com/groups/me/reports/f84b93bf-c2e6-4952-89b7-960e66ba6247/ReportSection2119b0367b4f402feb49?experience=power-bi" },
-            { area: "Mantención", informe: "Tiempos Muertos Plywood Histórico", link: "https://app.powerbi.com/view?r=eyJrIjoiZGI0NTBiMzAtZjU4Zi00ZDViLThmOTUtODc1NThjMDkxOGQ0IiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Calidad", informe: "Indicadores de Calidad", link: "https://app.powerbi.com/view?r=eyJrIjoiZDZiMDkyMGEtYjVmOC00NWM4LTllYzMtZDlmZjA0MWRkYWI5IiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "Ventas", informe: "Ventas con Precio", link: "https://app.powerbi.com/view?r=eyJrIjoiOGJmNGM1ZjctYzBmNS00MjU4LWIyZjctMjJmNDZlYmMyNzhmIiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" },
-            { area: "RRHH", informe: "Reportes RRHH", link: "https://app.powerbi.com/view?r=eyJrIjoiNmZlYTI2YTgtMzU1Ny00NzgyLWIxYWYtZDRhYzU1YWM5MTExIiwidCI6IjhkYWY1OTk3LTBiYWMtNDU3Zi1hNjVhLWNmN2VkM2JhOGI4NiJ9" }
-        ];
+        let reportData = [];
+
+        function csvToArray(str, delimiter = ",") {
+            const headers = str.slice(0, str.indexOf("\n")).split(delimiter);
+            return str
+                .slice(str.indexOf("\n") + 1)
+                .split("\n")
+                .filter(row => row.trim())
+                .map(row => {
+                    const values = row.split(delimiter);
+                    return headers.reduce((obj, header, i) => {
+                        obj[header.trim()] = values[i]?.trim() || "";
+                        return obj;
+                    }, {});
+                });
+        }
+
+        const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2AcFiVIpl8ygFV7S-gBkcSq6oa8tbiBd4yd7HLOlcem7WD8pbGXZccoEC4csIbd2QGYNEoAUEJe4B/pub?gid=0&single=true&output=csv"
+
+        fetch(SHEET_URL)
+            .then(res => res.text())
+            .then(text => {
+                reportData = csvToArray(text);
+                document.dispatchEvent(new Event('reportDataReady'));
+            });
 
         document.addEventListener('DOMContentLoaded', function() {
             const reportContainer = document.getElementById('reportContainer');
