@@ -392,6 +392,44 @@
             'RRHH': `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>`
         };
 
+        // Icono genérico por defecto para nuevas categorías
+        const defaultIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>`;
+
+        // Función para obtener el icono de un área
+        function getAreaIcon(area) {
+            return areaIcons[area] || defaultIcon;
+        }
+
+        // Función para validar y corregir URLs
+        function fixUrl(url) {
+            if (!url || url.trim() === '') return '#';
+
+            const trimmedUrl = url.trim();
+
+            // Si ya tiene protocolo, devolver tal cual
+            if (trimmedUrl.startsWith('http://') || trimmedUrl.startsWith('https://')) {
+                return trimmedUrl;
+            }
+
+            // Si empieza con www., agregar https://
+            if (trimmedUrl.startsWith('www.')) {
+                return 'https://' + trimmedUrl;
+            }
+
+            // Si parece un dominio pero no tiene protocolo, agregar https://
+            if (trimmedUrl.includes('.') && !trimmedUrl.includes('/') && !trimmedUrl.includes(' ')) {
+                return 'https://' + trimmedUrl;
+            }
+
+            // Si tiene un dominio pero empieza con algo como "google.cl"
+            if (/^[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/.test(trimmedUrl)) {
+                return 'https://' + trimmedUrl;
+            }
+
+            // En caso contrario, intentar agregar https://
+            return 'https://' + trimmedUrl;
+        }
+
         let reportData = [];
 
         function csvToArray(str, delimiter = ",") {
@@ -493,7 +531,7 @@
                         <div class="area-header" data-area="${area}">
                             <div class="area-title">
                                 <svg class="area-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    ${areaIcons[area]}
+                                    ${getAreaIcon(area)}
                                 </svg>
                                 ${area}
                             </div>
@@ -508,7 +546,7 @@
                             <ul class="reports-list">
                                 ${reports.map(report => `
                                     <li class="report-item">
-                                        <a href="${report.link}" target="_blank" rel="noopener" class="report-link">
+                                        <a href="${fixUrl(report.link)}" target="_blank" rel="noopener" class="report-link">
                                             <span class="report-name">${report.informe}</span>
                                             <svg class="external-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
